@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+bin_path = File.expand_path(__dir__)
+lib_path = File.expand_path(File.join(__dir__, '..', 'lib'))
+
+$LOAD_PATH.unshift(bin_path) unless $LOAD_PATH.include?(bin_path)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+require 'grpc'
+require 'weather_service'
+require 'weather_service_pb'
+require 'weather_service_services_pb'
+
+class Server < WeatherService::Service::Service
+  def temperature
+    puts WeatherService.temperature
+    WeatherService::TemperatureResponse.new
+  end
+end
+
+s = GRPC::RpcServer.new
+s.add_http2_port('0.0.0.0:3001', :this_port_is_insecure)
+s.handle(Server)
+s.run_till_terminated_or_interrupted([1, 'int', 'SIGQUIT'])

@@ -1,0 +1,13 @@
+syntax = 'proto3';
+
+package weather_service;
+
+message TemperatureRequest {
+}
+
+message TemperatureResponse {
+}
+
+service Service {
+  rpc Temperature (TemperatureRequest) returns (TemperatureResponse) {}
+}
