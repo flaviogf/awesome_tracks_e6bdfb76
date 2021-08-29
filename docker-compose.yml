@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  weather_service:
+    build: ./weather_service
+    volumes:
+      - ./:/usr/local/app
+    command:
+      - './weather_service/bin/server'
+  cache:
+    image: redis
