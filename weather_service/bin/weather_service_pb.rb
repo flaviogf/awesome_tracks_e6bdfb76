@@ -6,8 +6,10 @@ require 'google/protobuf'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("weather_service.proto", :syntax => :proto3) do
     add_message "weather_service.TemperatureRequest" do
+      optional :city, :string, 1
     end
     add_message "weather_service.TemperatureResponse" do
+      proto3_optional :temperature, :float, 1
     end
   end
 end
