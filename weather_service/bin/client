@@ -10,6 +10,8 @@ require 'grpc'
 require 'weather_service_pb'
 require 'weather_service_services_pb'
 
+city = ARGV.fetch(0, 'franca')
+
 stub = WeatherService::Service::Stub.new('localhost:3001', :this_channel_is_insecure)
 
-pp stub.temperature(WeatherService::TemperatureResponse.new)
+pp stub.temperature(WeatherService::TemperatureRequest.new(city: city))
