@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'weather_service/open_weather_map_repository'
+
 module WeatherService
   module_function
 
