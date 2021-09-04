@@ -14,9 +14,9 @@ require 'weather_service_pb'
 require 'weather_service_services_pb'
 
 class Server < WeatherService::Service::Service
-  def temperature(_request, _call)
-    puts WeatherService.temperature
-    WeatherService::TemperatureResponse.new
+  def temperature(request, _call)
+    temperature = WeatherService.temperature(request)
+    WeatherService::TemperatureResponse.new(temperature: temperature)
   end
 end
 
