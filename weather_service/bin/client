@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+bin_path = File.expand_path(__dir__)
+
+$LOAD_PATH.unshift(bin_path) unless $LOAD_PATH.include?(bin_path)
+
+require 'grpc'
+require 'weather_service_pb'
+require 'weather_service_services_pb'
+
+stub = WeatherService::Service::Stub.new('localhost:3001', :this_channel_is_insecure)
+
+pp stub.temperature(WeatherService::TemperatureResponse.new)
