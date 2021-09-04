@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faker'
+require 'pry'
 require 'weather_service'
 
 RSpec.configure do |config|
