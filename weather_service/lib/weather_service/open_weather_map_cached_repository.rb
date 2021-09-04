@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WeatherService
-  class OpenWeatherMapRepositoryCached
+  class OpenWeatherMapCachedRepository
     def initialize(repository:, cache:, logger:)
       @repository = repository
       @cache = cache

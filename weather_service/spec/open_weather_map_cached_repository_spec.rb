@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WeatherService
-  RSpec.describe OpenWeatherMapRepositoryCached do
+  RSpec.describe OpenWeatherMapCachedRepository do
     describe '.temperature_by_city' do
       context 'when pass city' do
         subject!(:service) do
