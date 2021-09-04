@@ -18,7 +18,7 @@ module WeatherService
 
     def cache(key)
       record = @cache.get(key)
-      return record unless record.nil?
+      return Float(record) unless record.nil?
 
       record = yield(key)
       @cache.set(key, record, ex: 60 * 30)
