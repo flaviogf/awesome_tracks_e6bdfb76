@@ -6,11 +6,15 @@ module WeatherService
   RSpec.describe OpenWeatherMapRepository do
     describe '#temperature_by_city' do
       context 'when pass city' do
-        subject!(:service) { described_class.new(client: client, logger: logger).temperature_by_city('franca') }
+        subject!(:service) do
+          described_class.new(client: client, logger: logger).temperature_by_city(city)
+        end
 
         let(:client) { double('client', get: response) }
 
         let(:logger) { double('logger', error: nil) }
+
+        let(:city) { Faker::Address.city }
 
         let(:response) { Response.new(200, body) }
 
@@ -19,9 +23,11 @@ module WeatherService
         it { is_expected.to be_a(Float) }
 
         context 'when something goes wrong' do
-          let(:client) { double('client', get: error) }
-
-          let(:error) { -> { raise StandardError } }
+          let(:client) do
+            client = double('client')
+            allow(client).to receive(:get).and_raise(StandardError)
+            client
+          end
 
           it { is_expected.to be_nil }
 
