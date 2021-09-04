@@ -6,32 +6,26 @@ module WeatherService
   RSpec.describe OpenWeatherMapRepository do
     describe '#temperature_by_city' do
       context 'when pass city' do
-        subject { described_class.new(client: client).temperature_by_city('franca') }
+        subject!(:service) { described_class.new(client: client, logger: logger).temperature_by_city('franca') }
 
-        let(:client) do
-          double('client', get: ok)
-        end
+        let(:client) { double('client', get: response) }
 
-        let(:ok) do
-          Response.new(200, body)
-        end
+        let(:logger) { double('logger', error: nil) }
 
-        let(:internal_server_error) do
-          Response.new(500, body)
-        end
+        let(:response) { Response.new(200, body) }
 
-        let(:body) do
-          File.read(File.join(File.expand_path(__dir__), 'fixtures', 'open_weather_map_campinas_200'))
-        end
+        let(:body) { File.read(File.join(File.expand_path(__dir__), 'fixtures', 'open_weather_map_campinas_200')) }
 
         it { is_expected.to be_a(Float) }
 
-        context 'when service is not available' do
-          let(:client) do
-            double('client', get: internal_server_error)
-          end
+        context 'when something goes wrong' do
+          let(:client) { double('client', get: error) }
+
+          let(:error) { -> { raise StandardError } }
 
           it { is_expected.to be_nil }
+
+          it { expect(logger).to have_received(:error).once }
         end
       end
     end
