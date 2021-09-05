@@ -1,0 +1,11 @@
+syntax = 'proto3';
+
+package tracks_service;
+
+message TrackRequest {}
+
+message TrackResponse {}
+
+service Service {
+  rpc Track(TrackRequest) returns (TrackResponse);
+}
