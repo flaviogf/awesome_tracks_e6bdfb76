@@ -4,9 +4,7 @@ module WeatherService
   RSpec.describe OpenWeatherMapCachedRepository do
     describe '.temperature_by_city' do
       context 'when pass city' do
-        subject!(:service) do
-          described_class.new(repository: repository, cache: cache, logger: logger).temperature_by_city(city)
-        end
+        subject! { described_class.new(repository: repository, cache: cache, logger: logger).temperature_by_city(city) }
 
         let(:repository) { double('repository', temperature_by_city: temperature) }
 
