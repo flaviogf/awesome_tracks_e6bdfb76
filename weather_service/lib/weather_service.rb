@@ -12,11 +12,13 @@ module WeatherService
   def temperature(request)
     $stdout.sync = true
 
-    repository = OpenWeatherMapRepository.new(client: client, logger: logger)
-
     cached_repository = OpenWeatherMapCachedRepository.new(repository: repository, cache: cache, logger: logger)
 
     cached_repository.temperature_by_city(request.city)
+  end
+
+  def repository
+    OpenWeatherMapRepository.new(client: client, logger: logger)
   end
 
   def client
