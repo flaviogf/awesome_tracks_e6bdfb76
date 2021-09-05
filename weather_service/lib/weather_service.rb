@@ -16,7 +16,7 @@ module WeatherService
 
     logger = Logger.new
 
-    cache = Redis.new(host: 'cache')
+    cache = Redis.new(host: 'cache', timeout: 5)
 
     repository = OpenWeatherMapRepository.new(client: client, logger: logger)
 
