@@ -5,6 +5,8 @@ services:
     build: ./weather_service
     volumes:
       - ./:/usr/local/app
+    environment:
+      OPEN_WEATHER_MAP_API_KEY: 'b77e07f479efe92156376a8b07640ced'
     command:
       - './weather_service/bin/server'
   cache:
