@@ -6,9 +6,7 @@ module WeatherService
   RSpec.describe OpenWeatherMapRepository do
     describe '#temperature_by_city' do
       context 'when pass city' do
-        subject!(:service) do
-          described_class.new(client: client, logger: logger).temperature_by_city(city)
-        end
+        subject! { described_class.new(client: client, logger: logger).temperature_by_city(city) }
 
         let(:client) { double('client', get: response) }
 
