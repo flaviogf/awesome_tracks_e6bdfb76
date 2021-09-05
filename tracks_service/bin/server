@@ -2,4 +2,24 @@
 
 # frozen_string_literal: true
 
-puts "It's working"
+bin_path = File.expand_path(__dir__)
+lib_path = File.join(File.expand_path(__dir__), '..', 'lib')
+
+$LOAD_PATH.unshift(bin_path) unless $LOAD_PATH.include?(bin_path)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+require 'grpc'
+require 'tracks_service'
+require 'tracks_service_pb'
+require 'tracks_service_services_pb'
+
+class Server < TracksService::Service::Service
+  def track(_request, _call)
+    TracksService::TrackResponse.new
+  end
+end
+
+s = GRPC::RpcServer.new
+s.add_http2_port('0.0.0.0:3000', :this_port_is_insecure)
+s.handle(Server)
+s.run_till_terminated_or_interrupted([1, 'int', 'SIGQUIT'])
