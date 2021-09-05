@@ -12,8 +12,6 @@ module WeatherService
   def temperature(request)
     $stdout.sync = true
 
-    logger = Logger.new
-
     repository = OpenWeatherMapRepository.new(client: client, logger: logger)
 
     cached_repository = OpenWeatherMapCachedRepository.new(repository: repository, cache: cache, logger: logger)
@@ -23,6 +21,10 @@ module WeatherService
 
   def client
     Faraday.new(request: { timeout: 5 }) { |f| f.use Faraday::Response::RaiseError }
+  end
+
+  def logger
+    Logger.new
   end
 
   def cache
