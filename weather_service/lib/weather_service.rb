@@ -13,6 +13,8 @@ module WeatherService
     $stdout.sync = true
 
     cached_repository.temperature_by_city(request.city)
+  rescue StandardError => e
+    logger.error(e)
   end
 
   def cached_repository
