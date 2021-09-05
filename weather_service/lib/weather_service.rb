@@ -14,8 +14,6 @@ module WeatherService
 
     logger = Logger.new
 
-    cache = Redis.new(host: 'cache', timeout: 5)
-
     repository = OpenWeatherMapRepository.new(client: client, logger: logger)
 
     cached_repository = OpenWeatherMapCachedRepository.new(repository: repository, cache: cache, logger: logger)
@@ -25,5 +23,9 @@ module WeatherService
 
   def client
     Faraday.new(request: { timeout: 5 }) { |f| f.use Faraday::Response::RaiseError }
+  end
+
+  def cache
+    cache = Redis.new(host: 'cache', timeout: 5)
   end
 end
