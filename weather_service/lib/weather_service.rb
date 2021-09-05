@@ -26,6 +26,6 @@ module WeatherService
   end
 
   def cache
-    cache = Redis.new(host: 'cache', timeout: 5)
+    Redis.new(host: 'cache', timeout: 5)
   end
 end
