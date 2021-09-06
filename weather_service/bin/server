@@ -13,6 +13,8 @@ require 'weather_service'
 require 'weather_service_pb'
 require 'weather_service_services_pb'
 
+$stdout.sync = true
+
 class Server < WeatherService::Service::Service
   def temperature(request, _call)
     result = WeatherService.temperature(request)

@@ -10,6 +10,8 @@ require 'grpc'
 require 'weather_service_pb'
 require 'weather_service_services_pb'
 
+$stdout.sync = true
+
 city = ARGV.fetch(0, 'franca')
 
 stub = WeatherService::Service::Stub.new('localhost:3000', :this_channel_is_insecure)
