@@ -2,9 +2,36 @@ syntax = 'proto3';
 
 package tracks_service;
 
-message TrackRequest {}
+message TrackRequest {
+  string theme = 1;
+}
 
-message TrackResponse {}
+message TrackResponse {
+  bool success = 1;
+  Track value = 2;
+  string error = 3;
+}
+
+message Track {
+  string id = 1;
+  string name = 2;
+  string url = 3;
+  Album album = 4;
+  repeated Artist artists = 5;
+}
+
+message Album {
+  string id = 1;
+  string name = 2;
+  string url = 3;
+  string image_url = 4;
+}
+
+message Artist {
+  string id = 1;
+  string name = 2;
+  string url = 3;
+}
 
 service Service {
   rpc Track(TrackRequest) returns (TrackResponse);

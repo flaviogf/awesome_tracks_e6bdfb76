@@ -6,8 +6,30 @@ require 'google/protobuf'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("tracks_service.proto", :syntax => :proto3) do
     add_message "tracks_service.TrackRequest" do
+      optional :theme, :string, 1
     end
     add_message "tracks_service.TrackResponse" do
+      optional :success, :bool, 1
+      optional :value, :message, 2, "tracks_service.Track"
+      optional :error, :string, 3
+    end
+    add_message "tracks_service.Track" do
+      optional :id, :string, 1
+      optional :name, :string, 2
+      optional :url, :string, 3
+      optional :album, :message, 4, "tracks_service.Album"
+      repeated :artists, :message, 5, "tracks_service.Artist"
+    end
+    add_message "tracks_service.Album" do
+      optional :id, :string, 1
+      optional :name, :string, 2
+      optional :url, :string, 3
+      optional :image_url, :string, 4
+    end
+    add_message "tracks_service.Artist" do
+      optional :id, :string, 1
+      optional :name, :string, 2
+      optional :url, :string, 3
     end
   end
 end
@@ -15,4 +37,7 @@ end
 module TracksService
   TrackRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("tracks_service.TrackRequest").msgclass
   TrackResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("tracks_service.TrackResponse").msgclass
+  Track = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("tracks_service.Track").msgclass
+  Album = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("tracks_service.Album").msgclass
+  Artist = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("tracks_service.Artist").msgclass
 end
