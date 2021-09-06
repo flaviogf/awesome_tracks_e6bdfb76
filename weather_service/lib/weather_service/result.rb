@@ -3,6 +3,8 @@
 module WeatherService
   class Result
     module Methods
+      module_function
+
       def success(value)
         Result.new(success: true, value: value)
       end
