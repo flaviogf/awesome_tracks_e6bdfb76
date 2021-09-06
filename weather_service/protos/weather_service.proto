@@ -3,11 +3,13 @@ syntax = 'proto3';
 package weather_service;
 
 message TemperatureRequest {
-  string city = 1;
+  optional string city = 1;
 }
 
 message TemperatureResponse {
-  optional float temperature = 1;
+  bool success = 1;
+  optional float value = 2;
+  optional string error = 3;
 }
 
 service Service {
