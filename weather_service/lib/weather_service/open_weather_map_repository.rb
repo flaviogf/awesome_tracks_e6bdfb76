@@ -18,11 +18,13 @@ module WeatherService
 
       body = JSON.parse(response.body)
 
-      Success(Float(body.dig('main', 'temp')))
+      value = body.dig('main', 'temp').to_f
+
+      success(value)
     rescue StandardError => e
       @logger.error(e)
 
-      Failure("could not get temperature for city: #{city}")
+      failure("could not get temperature for city: #{city}")
     end
   end
 end
