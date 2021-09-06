@@ -11,24 +11,23 @@ module WeatherService
     end
 
     def temperature_by_city(city)
-      value = cache(city) { |key| @repository.temperature_by_city(key) }
+      value = @cache.get(city)
+
+      return value.to_f unless value.nil?
+
+      result = @repository.temperature_by_city(city)
+
+      return result if result.failure?
+
+      value = result.value
+
+      @cache.set(city, value, ex: 60 * 30)
 
       success(value)
     rescue StandardError => e
       @logger.error(e)
 
       failure("could not get temperature for city: #{city}")
-    end
-
-    private
-
-    def cache(key)
-      record = @cache.get(key)
-      return Float(record) unless record.nil?
-
-      record = yield(key)
-      @cache.set(key, record, ex: 60 * 30)
-      record
     end
   end
 end

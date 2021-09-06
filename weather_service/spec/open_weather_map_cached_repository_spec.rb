@@ -6,7 +6,7 @@ module WeatherService
       context 'when pass city' do
         subject(:cached_repository) { described_class.new(repository: repository, cache: cache, logger: logger) }
 
-        let(:repository) { double('repository', temperature_by_city: temperature) }
+        let(:repository) { double('repository', temperature_by_city: Result::Methods.success(temperature)) }
 
         let(:cache) { double('cache', set: 'OK', get: nil) }
 
@@ -24,6 +24,15 @@ module WeatherService
         it 'returns float' do
           result = cached_repository.temperature_by_city(city)
           expect(result.value).to be_a(Float)
+        end
+
+        context 'when repository returns failed result' do
+          let(:repository) { double('repository', temperature_by_city: Result::Methods.failure('oops')) }
+
+          it 'returns failed result' do
+            result = cached_repository.temperature_by_city(city)
+            expect(result.failure?).to be_truthy
+          end
         end
 
         context 'when something goes wrong' do
