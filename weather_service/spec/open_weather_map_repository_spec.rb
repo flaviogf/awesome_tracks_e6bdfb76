@@ -6,7 +6,7 @@ module WeatherService
   RSpec.describe OpenWeatherMapRepository do
     describe '#temperature_by_city' do
       context 'when pass city' do
-        subject! { described_class.new(client: client, logger: logger).temperature_by_city(city) }
+        subject(:repository) { described_class.new(client: client, logger: logger) }
 
         let(:client) { double('client', get: response) }
 
@@ -18,7 +18,15 @@ module WeatherService
 
         let(:body) { File.read(File.join(File.expand_path(__dir__), 'fixtures', 'open_weather_map_campinas_200')) }
 
-        it { is_expected.to be_a(Float) }
+        it 'returns succeeded result' do
+          result = repository.temperature_by_city(city)
+          expect(result.success?).to be_truthy
+        end
+
+        it 'returns float' do
+          result = repository.temperature_by_city(city)
+          expect(result.value).to be_a(Float)
+        end
 
         context 'when something goes wrong' do
           let(:client) do
@@ -27,9 +35,15 @@ module WeatherService
             client
           end
 
-          it { is_expected.to be_nil }
+          it 'returns failed result' do
+            result = repository.temperature_by_city(city)
+            expect(result.failure?).to be_truthy
+          end
 
-          it { expect(logger).to have_received(:error).once }
+          it 'calls logger to record an error' do
+            repository.temperature_by_city(city)
+            expect(logger).to have_received(:error).once
+          end
         end
       end
     end
