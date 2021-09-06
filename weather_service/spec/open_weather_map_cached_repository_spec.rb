@@ -2,7 +2,7 @@
 
 module WeatherService
   RSpec.describe OpenWeatherMapCachedRepository do
-    describe '.temperature_by_city' do
+    describe '#temperature_by_city' do
       context 'when pass city' do
         subject(:cached_repository) { described_class.new(repository: repository, cache: cache, logger: logger) }
 
