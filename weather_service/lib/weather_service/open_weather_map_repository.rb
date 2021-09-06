@@ -16,9 +16,11 @@ module WeatherService
 
       body = JSON.parse(response.body)
 
-      value = body.dig('main', 'temp').to_f
+      main = body.fetch('main')
 
-      success(value)
+      temp = Float(main.fetch('temp'))
+
+      success(temp)
     rescue StandardError => e
       @logger.error(e)
 
