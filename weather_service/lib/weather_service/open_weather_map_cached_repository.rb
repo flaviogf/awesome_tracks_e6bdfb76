@@ -2,6 +2,8 @@
 
 module WeatherService
   class OpenWeatherMapCachedRepository
+    include Result::Methods
+
     def initialize(repository:, cache:, logger:)
       @repository = repository
       @cache = cache
@@ -9,9 +11,13 @@ module WeatherService
     end
 
     def temperature_by_city(city)
-      cache(city) { |key| @repository.temperature_by_city(key) }
+      value = cache(city) { |key| @repository.temperature_by_city(key) }
+
+      success(value)
     rescue StandardError => e
       @logger.error(e)
+
+      failure("could not get temperature for city: #{city}")
     end
 
     private
