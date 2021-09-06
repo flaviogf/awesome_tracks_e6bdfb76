@@ -15,8 +15,11 @@ require 'weather_service_services_pb'
 
 class Server < WeatherService::Service::Service
   def temperature(request, _call)
-    temperature = WeatherService.temperature(request)
-    WeatherService::TemperatureResponse.new(temperature: temperature)
+    result = WeatherService.temperature(request)
+
+    return WeatherService::TemperatureResponse.new(error: result.error, success: false) if result.failure?
+
+    WeatherService::TemperatureResponse.new(value: result.value, success: true)
   end
 end
 
