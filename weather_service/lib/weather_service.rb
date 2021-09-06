@@ -2,9 +2,11 @@
 
 require 'faraday'
 require 'redis'
-require 'weather_service/open_weather_map_cached_repository'
-require 'weather_service/open_weather_map_repository'
+
+require 'weather_service/result'
 require 'weather_service/logger'
+require 'weather_service/open_weather_map_repository'
+require 'weather_service/open_weather_map_cached_repository'
 
 module WeatherService
   module_function
