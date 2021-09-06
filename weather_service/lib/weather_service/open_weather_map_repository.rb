@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module WeatherService
   class OpenWeatherMapRepository
     include Result::Methods
