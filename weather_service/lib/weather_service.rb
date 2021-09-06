@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'logger'
 require 'redis'
 
 require 'weather_service/result'
-require 'weather_service/logger'
 require 'weather_service/open_weather_map_repository'
 require 'weather_service/open_weather_map_cached_repository'
 
@@ -35,7 +35,7 @@ module WeatherService
     end
 
     def logger
-      Logger.new
+      Logger.new($stdout)
     end
 
     def cache
