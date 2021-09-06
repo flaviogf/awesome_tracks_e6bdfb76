@@ -3,11 +3,11 @@
 module WeatherService
   class Result
     module Methods
-      def Success(value)
+      def success(value)
         Result.new(success: true, value: value)
       end
 
-      def Failure(error)
+      def failure(error)
         Result.new(success: false, error: error)
       end
     end
