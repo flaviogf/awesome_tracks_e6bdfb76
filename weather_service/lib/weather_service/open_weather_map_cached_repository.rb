@@ -13,7 +13,7 @@ module WeatherService
     def temperature_by_city(city)
       value = @cache.get(city)
 
-      return value.to_f unless value.nil?
+      return success(value.to_f) unless value.nil?
 
       result = @repository.temperature_by_city(city)
 

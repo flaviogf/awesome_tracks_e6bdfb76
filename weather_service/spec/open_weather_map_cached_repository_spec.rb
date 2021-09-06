@@ -68,6 +68,16 @@ module WeatherService
         context 'when cache was hit' do
           let(:cache) { double('cache', set: 'OK', get: temperature) }
 
+          it 'returns succeeded result' do
+            result = cached_repository.temperature_by_city(city)
+            expect(result.success?).to be_truthy
+          end
+
+          it 'returns float' do
+            result = cached_repository.temperature_by_city(city)
+            expect(result.value).to be_a(Float)
+          end
+
           it 'does not call repository to get the temperature' do
             cached_repository.temperature_by_city(city)
             expect(repository).not_to have_received(:temperature_by_city).with(city)
