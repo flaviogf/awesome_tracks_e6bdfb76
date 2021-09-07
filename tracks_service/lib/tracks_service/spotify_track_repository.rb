@@ -19,13 +19,11 @@ module TracksService
 
       body = JSON.parse(response.body)
 
-      tracks = body.fetch('tracks')
+      hashes = Array(body.fetch('tracks').fetch('items'))
 
-      items = Array(tracks.fetch('items'))
+      hash = hashes.first
 
-      track = items.first
-
-      success(track)
+      success(track(hash))
     rescue StandardError => e
       @logger.error(e)
 
@@ -44,6 +42,33 @@ module TracksService
       body = JSON.parse(response.body)
 
       body.fetch('access_token')
+    end
+
+    def track(hash)
+      Models::Track.new(
+        hash.fetch('id'),
+        hash.fetch('name'),
+        hash.fetch('external_urls').fetch('spotify'),
+        album(hash),
+        Array(hash.fetch('artists')).map(&method(:artist))
+      )
+    end
+
+    def artist(hash)
+      Models::Artist.new(
+        hash.fetch('id'),
+        hash.fetch('name'),
+        hash.fetch('external_urls').fetch('spotify')
+      )
+    end
+
+    def album(hash)
+      Models::Album.new(
+        hash.fetch('album').fetch('id'),
+        hash.fetch('album').fetch('name'),
+        hash.fetch('album').fetch('external_urls').fetch('spotify'),
+        Array(hash.fetch('album').fetch('images')).first.fetch('url')
+      )
     end
   end
 end
