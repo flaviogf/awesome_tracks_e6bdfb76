@@ -34,6 +34,39 @@ module TracksService
         expect(result.success?).to be_truthy
       end
 
+      it 'returns a track' do
+        result = repository.track_by_theme(theme)
+
+        items = Array(JSON.parse(track).dig('tracks', 'items'))
+
+        item = items.first
+
+        expected_hash = {
+          id: item.fetch('id'),
+          name: item.fetch('name'),
+          url: item.fetch('external_urls').fetch('spotify'),
+          album: {
+            id: item.fetch('album').fetch('id'),
+            name: item.fetch('album').fetch('name'),
+            url: item.fetch('album').fetch('external_urls').fetch('spotify'),
+            image_url: Array(item.fetch('album').fetch('images')).first.fetch('url')
+          },
+          artists: Array(item.fetch('artists')).map do |it|
+            {
+              id: it.fetch('id'),
+              name: it.fetch('name'),
+              url: it.fetch('external_urls').fetch('spotify')
+            }
+          end
+        }
+
+        value = result.value
+
+        hash = value.to_h
+
+        expect(expected_hash).to eq(hash)
+      end
+
       context 'when something goes wrong' do
         before do
           allow(client).to receive(:get).and_raise(StandardError.new('oops'))
