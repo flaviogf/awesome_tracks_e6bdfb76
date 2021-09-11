@@ -4,8 +4,8 @@ module TracksService
   class SpotifyTrackRepository
     include Result::Methods
 
-    SPOTIFY_API_CLIENT_ID = ENV.fetch('SPOTIFY_API_CLIENT_ID', '').freeze
-    SPOTIFY_API_CLIENT_SECRET = ENV.fetch('SPOTIFY_API_CLIENT_SECRET', '').freeze
+    SPOTIFY_CLIENT_ID = ENV.fetch('SPOTIFY_CLIENT_ID', '').freeze
+    SPOTIFY_CLIENT_SECRET = ENV.fetch('SPOTIFY_CLIENT_SECRET', '').freeze
 
     def initialize(client:, logger:)
       @client = client
@@ -33,11 +33,13 @@ module TracksService
     private
 
     def access_token
-      api_key = Base64.strict_encode64("#{SPOTIFY_API_CLIENT_ID}:#{SPOTIFY_API_CLIENT_SECRET}")
+      api_key = Base64.strict_encode64("#{SPOTIFY_CLIENT_ID}:#{SPOTIFY_CLIENT_SECRET}")
 
       url = 'https://accounts.spotify.com/api/token'
 
-      response = @client.get(url) { |req| req.headers['Authorization'] = "Basic #{api_key}" }
+      body = 'grant_type=client_credentials'
+
+      response = @client.post(url, body) { |req| req.headers['Authorization'] = "Basic #{api_key}" }
 
       body = JSON.parse(response.body)
 
