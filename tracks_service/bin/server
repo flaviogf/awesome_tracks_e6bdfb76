@@ -21,9 +21,26 @@ class Server < TracksService::Service::Service
 
     return TracksService::TrackResponse.new(success: false, error: result.error) if result.failure?
 
-    track = TracksService::Track.new
+    track = result.value
 
-    TracksService::TrackResponse.new(success: true, value: track)
+    album = TracksService::Album.new(
+      id: track.album.id,
+      name: track.album.name,
+      url: track.album.url,
+      image_url: track.album.image_url
+    )
+
+    artists = track.artists.collect { |it| TracksService::Artist.new( id: it.id, name: it.name, url: it.url) }
+
+    value = TracksService::Track.new(
+      id: track.id,
+      name: track.name,
+      url: track.url,
+      album: album,
+      artists: artists
+    )
+
+    TracksService::TrackResponse.new(success: true, value: value)
   end
 end
 
