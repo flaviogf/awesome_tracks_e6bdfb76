@@ -10,8 +10,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "tracks_service.TrackResponse" do
       optional :success, :bool, 1
-      optional :value, :message, 2, "tracks_service.Track"
-      optional :error, :string, 3
+      proto3_optional :value, :message, 2, "tracks_service.Track"
+      proto3_optional :error, :string, 3
     end
     add_message "tracks_service.Track" do
       optional :id, :string, 1
