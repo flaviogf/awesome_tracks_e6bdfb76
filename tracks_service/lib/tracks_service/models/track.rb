@@ -3,6 +3,19 @@
 module TracksService
   module Models
     class Track
+      def self.from_json(json)
+        json = json.to_json if json.is_a?(Hash)
+        json = JSON.parse(json)
+
+        new(
+          json.fetch('id'),
+          json.fetch('name'),
+          json.fetch('url'),
+          Album.from_json(json.fetch('album')),
+          Array(json.fetch('artists')).collect(&Artist.method(:from_json))
+        )
+      end
+
       def initialize(id, name, url, album, artists)
         @id = id
         @name = name
