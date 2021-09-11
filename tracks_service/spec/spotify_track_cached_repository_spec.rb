@@ -70,7 +70,7 @@ module TracksService
 
         it 'calls cache to set the founded track' do
           cached_repository.track_by_theme(theme)
-          expect(cache).to have_received(:set).with(theme, track.to_json).once
+          expect(cache).to have_received(:set).with(theme, track.to_json, ex: 60 * 30).once
         end
       end
 
