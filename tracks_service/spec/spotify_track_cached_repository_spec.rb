@@ -104,6 +104,17 @@ module TracksService
           expect(cache).not_to have_received(:set)
         end
       end
+
+      context 'when repository returns failed result' do
+        before do
+          allow(repository).to receive(:track_by_theme).and_return(Result::Methods.failure('oops'))
+        end
+
+        it 'returns failed result' do
+          result = cached_repository.track_by_theme(theme)
+          expect(result.failure?).to be_truthy
+        end
+      end
     end
   end
 end
