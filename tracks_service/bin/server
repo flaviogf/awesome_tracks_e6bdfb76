@@ -13,9 +13,17 @@ require 'tracks_service'
 require 'tracks_service_pb'
 require 'tracks_service_services_pb'
 
+$stdout.sync = true
+
 class Server < TracksService::Service::Service
-  def track(_request, _call)
-    TracksService::TrackResponse.new
+  def track(request, _call)
+    result = TracksService.track(request)
+
+    return TracksService::TrackResponse.new(success: false, error: result.error) if result.failure?
+
+    track = TracksService::Track.new
+
+    TracksService::TrackResponse.new(success: true, value: track)
   end
 end
 
