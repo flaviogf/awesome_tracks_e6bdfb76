@@ -20,6 +20,8 @@ module TracksService
         @url = url
       end
 
+      attr_reader :id, :name, :url
+
       def to_h
         {
           id: @id,

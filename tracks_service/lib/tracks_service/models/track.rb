@@ -24,6 +24,8 @@ module TracksService
         @artists = artists
       end
 
+      attr_reader :id, :name, :url, :album, :artists
+
       def ==(other)
         to_json == other.to_json
       end

@@ -22,6 +22,8 @@ module TracksService
         @image_url = image_url
       end
 
+      attr_reader :id, :name, :url, :image_url
+
       def to_h
         {
           id: @id,
