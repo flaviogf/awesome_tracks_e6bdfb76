@@ -11,6 +11,10 @@ module TracksService
         @artists = artists
       end
 
+      def ==(other)
+        to_json == other.to_json
+      end
+
       def to_json(*args)
         to_h.to_json(*args)
       end
