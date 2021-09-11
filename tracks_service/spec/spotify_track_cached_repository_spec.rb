@@ -3,11 +3,13 @@
 module TracksService
   RSpec.describe SpotifyTrackCachedRepository do
     describe '#track_by_theme' do
-      subject(:cached_repository) { described_class.new(repository: repository, cache: cache) }
+      subject(:cached_repository) { described_class.new(repository: repository, cache: cache, logger: logger) }
 
       let(:repository) { double('repository') }
 
       let(:cache) { double('cache') }
+
+      let(:logger) { double('logger') }
 
       let(:theme) { Faker::Music.album }
 
@@ -113,6 +115,23 @@ module TracksService
         it 'returns failed result' do
           result = cached_repository.track_by_theme(theme)
           expect(result.failure?).to be_truthy
+        end
+      end
+
+      context 'when something goes wrong' do
+        before do
+          allow(cache).to receive(:get).and_raise(StandardError.new('oops'))
+          allow(logger).to receive(:error)
+        end
+
+        it 'returns failed result' do
+          result = cached_repository.track_by_theme(theme)
+          expect(result.failure?).to be_truthy
+        end
+
+        it 'calls logger to record error' do
+          cached_repository.track_by_theme(theme)
+          expect(logger).to have_received(:error).once
         end
       end
     end
