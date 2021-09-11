@@ -2,17 +2,31 @@
 
 RSpec.describe WeatherService do
   describe '.temperature' do
-    context 'when cache does not connect' do
-      let(:request) { Request.new(city) }
+    let(:cached_repository) { double('cached_repository') }
 
-      let(:city) { Faker::Address.city }
+    let(:logger) { double('logger') }
 
-      let(:logger) { double('logger') }
+    let(:request) { Request.new(city) }
 
+    let(:city) { Faker::Address.city }
+
+    let(:result) { WeatherService::Result::Methods.success('OK') }
+
+    before do
+      allow(described_class).to receive(:cached_repository).and_return(cached_repository)
+      allow(described_class).to receive(:logger).and_return(logger)
+      allow(cached_repository).to receive(:temperature_by_city).and_return(result)
+      allow(logger).to receive(:error)
+    end
+
+    it 'returns succeeded result' do
+      result = described_class.temperature(request)
+      expect(result.success?).to be_truthy
+    end
+
+    context 'when something goes wrong' do
       before do
-        allow(logger).to receive(:error)
-        allow(described_class).to receive(:logger).and_return(logger)
-        allow(described_class).to receive(:cache).and_raise(StandardError.new('oops'))
+        allow(described_class).to receive(:cached_repository).and_raise(StandardError.new('oops'))
       end
 
       it 'returns failed result' do
