@@ -11,6 +11,10 @@ module TracksService
         @artists = artists
       end
 
+      def to_json(*args)
+        to_h.to_json(*args)
+      end
+
       def to_h
         {
           id: @id,
