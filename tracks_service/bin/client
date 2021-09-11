@@ -12,4 +12,8 @@ require 'grpc'
 require 'tracks_service_pb'
 require 'tracks_service_services_pb'
 
-pp TracksService::Service::Stub.new('localhost:3000', :this_channel_is_insecure).track(TracksService::TrackRequest.new)
+$stdout.sync = true
+
+stub = TracksService::Service::Stub.new('localhost:3000', :this_channel_is_insecure)
+
+pp stub.track(TracksService::TrackRequest.new(theme: 'rock'))
