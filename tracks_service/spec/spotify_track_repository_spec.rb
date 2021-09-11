@@ -21,9 +21,13 @@ module TracksService
     before do
       allow(request).to receive(:headers).and_return({})
 
+      allow(client).to receive(:post) do |&block|
+        block.call(request)
+      end.and_return(Response.new(200, token))
+
       allow(client).to receive(:get) do |&block|
         block.call(request)
-      end.and_return(Response.new(200, token), Response.new(200, track))
+      end.and_return(Response.new(200, track))
 
       allow(logger).to receive(:error)
     end
