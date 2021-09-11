@@ -14,6 +14,8 @@ require 'tracks_service_services_pb'
 
 $stdout.sync = true
 
+theme = ARGV.fetch(0, 'rock')
+
 stub = TracksService::Service::Stub.new('localhost:3000', :this_channel_is_insecure)
 
-pp stub.track(TracksService::TrackRequest.new(theme: 'rock'))
+pp stub.track(TracksService::TrackRequest.new(theme: theme))
