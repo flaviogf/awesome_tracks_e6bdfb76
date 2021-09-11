@@ -30,7 +30,7 @@ class Server < TracksService::Service::Service
       image_url: track.album.image_url
     )
 
-    artists = track.artists.collect { |it| TracksService::Artist.new( id: it.id, name: it.name, url: it.url) }
+    artists = track.artists.collect { |it| TracksService::Artist.new(id: it.id, name: it.name, url: it.url) }
 
     value = TracksService::Track.new(
       id: track.id,
