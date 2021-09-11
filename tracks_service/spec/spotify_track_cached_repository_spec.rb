@@ -73,6 +73,37 @@ module TracksService
           expect(cache).to have_received(:set).with(theme, track.to_json).once
         end
       end
+
+      context 'when cache was hit' do
+        before do
+          allow(cache).to receive(:get).and_return(track.to_json)
+        end
+
+        it 'returns succeeded result' do
+          result = cached_repository.track_by_theme(theme)
+          expect(result.success?).to be_truthy
+        end
+
+        it 'returns the expected track' do
+          result = cached_repository.track_by_theme(theme)
+          expect(result.value).to eq(track)
+        end
+
+        it 'calls cache to try to get the track' do
+          cached_repository.track_by_theme(theme)
+          expect(cache).to have_received(:get).with(theme).once
+        end
+
+        it 'does not call the repository to get the track' do
+          cached_repository.track_by_theme(theme)
+          expect(repository).not_to have_received(:track_by_theme)
+        end
+
+        it 'does not call the cache to set the founded track' do
+          cached_repository.track_by_theme(theme)
+          expect(cache).not_to have_received(:set)
+        end
+      end
     end
   end
 end
