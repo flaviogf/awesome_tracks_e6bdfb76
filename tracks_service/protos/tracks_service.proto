@@ -8,8 +8,8 @@ message TrackRequest {
 
 message TrackResponse {
   bool success = 1;
-  Track value = 2;
-  string error = 3;
+  optional Track value = 2;
+  optional string error = 3;
 }
 
 message Track {
