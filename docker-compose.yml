@@ -1,6 +1,14 @@
 version: '3.9'
 
 services:
+  awesome_tracks_api:
+    build: ./awesome_tracks_api
+    volumes:
+      - ./:/usr/local/app
+    command:
+      - './awesome_tracks_api/bin/server'
+    ports:
+      - 3000:3000
   weather_service:
     build: ./weather_service
     volumes:
