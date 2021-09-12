@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+bin_path = File.expand_path(__dir__)
+lib_path = File.join(File.expand_path(__dir__), '..', 'lib')
+
+$LOAD_PATH.unshift(bin_path) unless $LOAD_PATH.include?(bin_path)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+require 'awesome_tracks_api'
+
+AwesomeTracksApi::Application.run!
