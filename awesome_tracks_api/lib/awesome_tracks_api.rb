@@ -8,8 +8,12 @@ module AwesomeTracksApi
 
     set :port, 3000
 
+    set :public_folder, -> { File.join(File.expand_path(__dir__), 'awesome_tracks_api', 'static') }
+
+    set :views, -> { File.join(File.expand_path(__dir__), 'awesome_tracks_api', 'views') }
+
     get '/' do
-      'Hey there!!!'
+      erb :index
     end
   end
 end
