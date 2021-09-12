@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
+require 'awesome_tracks_api/services'
 
 module AwesomeTracksApi
   class Application < Sinatra::Application
