@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Awesome Tracks
   version: 1.0.0
-  
+
 paths:
   /tracks:
     get:
@@ -31,18 +31,31 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    url:
-                      type: string
-                      format: uri
-                    album:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  url:
+                    type: string
+                    format: uri
+                  album:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                        format: uri
+                      image_url:
+                        type: string
+                        format: uri
+                  artists:
+                    type: array
+                    items:
                       type: object
                       properties:
                         id:
@@ -52,18 +65,3 @@ paths:
                         url:
                           type: string
                           format: uri
-                        image_url:
-                          type: string
-                          format: uri
-                    artists:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          name:
-                            type: string
-                          url:
-                            type: string
-                            format: uri
