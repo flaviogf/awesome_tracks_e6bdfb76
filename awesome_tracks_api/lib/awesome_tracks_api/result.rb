@@ -39,5 +39,9 @@ module AwesomeTracksApi
 
       @value
     end
+
+    alias success success?
+
+    alias failure failure?
   end
 end
