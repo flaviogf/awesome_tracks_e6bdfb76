@@ -17,7 +17,7 @@ module AwesomeTracksApi
       def call
         result = @track_repository.track(theme: 'rock')
 
-        return failure('could not get track') unless result.success
+        return failure('could not get track') unless result.success?
 
         track = result.value
 
