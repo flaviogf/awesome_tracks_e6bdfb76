@@ -3,7 +3,10 @@
 source 'https://rubygems.org'
 
 gem 'faker'
+gem 'grpc'
+gem 'grpc-tools'
 gem 'pry'
 gem 'pry-byebug'
 gem 'rspec'
 gem 'sinatra'
+gem 'sinatra-contrib'
