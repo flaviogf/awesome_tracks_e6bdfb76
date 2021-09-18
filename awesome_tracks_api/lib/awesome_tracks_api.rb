@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
+require 'sinatra/json'
 require 'awesome_tracks_api/result'
 require 'awesome_tracks_api/services'
 
