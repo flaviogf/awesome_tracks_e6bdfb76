@@ -1,3 +1,9 @@
+awesome_tracks_api generated code
+
+```sh
+grpc_tools_ruby_protoc -I ./tracks_service/protos/ --ruby_out=./awesome_tracks_api/lib/awesome_tracks_api/repositories/ --grpc_out=./awesome_tracks_api/lib/awesome_tracks_api/repositories/ ./tracks_service/protos/tracks_service.proto
+```
+
 tracks_service generated code
 
 ```sh
