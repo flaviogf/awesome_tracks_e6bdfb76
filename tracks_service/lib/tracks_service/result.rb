@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-module Result
-  module Methods
-    module_function
-
-    def success(value)
-      Result.new(success: true, value: value)
-    end
-
-    def failure(error)
-      Result.new(success: false, error: error)
-    end
-  end
-
+module TracksService
   class Result
+    module Methods
+      module_function
+
+      def success(value)
+        Result.new(success: true, value: value)
+      end
+
+      def failure(error)
+        Result.new(success: false, error: error)
+      end
+    end
+
     def initialize(success:, error: nil, value: nil)
       @success = success
       @error = error

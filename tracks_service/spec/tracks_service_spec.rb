@@ -10,7 +10,7 @@ RSpec.describe TracksService do
 
     let(:theme) { Faker::Music.album }
 
-    let(:result) { Result::Methods.success('OK') }
+    let(:result) { described_class::Result::Methods.success('OK') }
 
     before do
       allow(described_class).to receive(:cached_repository).and_return(cached_repository)
