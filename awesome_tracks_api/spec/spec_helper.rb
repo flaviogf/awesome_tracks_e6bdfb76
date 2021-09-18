@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faker'
+require 'pry'
 require 'awesome_tracks_api'
 
 RSpec.configure do |config|
