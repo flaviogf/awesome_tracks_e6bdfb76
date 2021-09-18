@@ -19,5 +19,13 @@ module AwesomeTracksApi
     get '/' do
       erb :index
     end
+
+    get '/tracks' do
+      result = Services::TrackSelector.call(params)
+
+      return json error: result.error if result.failure?
+
+      json result.value
+    end
   end
 end
