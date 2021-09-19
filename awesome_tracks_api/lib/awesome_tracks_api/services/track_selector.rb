@@ -7,14 +7,16 @@ module AwesomeTracksApi
 
       def self.call(
         request,
+        theme_selector: nil,
         weather_repository: Repositories::GRPCWeatherRepository.new,
         track_repository: Repositories::GRPCTrackRepository.new
       )
-        new(request, weather_repository, track_repository).call
+        new(request, theme_selector, weather_repository, track_repository).call
       end
 
-      def initialize(request, weather_repository, track_repository)
+      def initialize(request, theme_selector, weather_repository, track_repository)
         @request = request
+        @theme_selector = theme_selector
         @weather_repository = weather_repository
         @track_repository = track_repository
       end

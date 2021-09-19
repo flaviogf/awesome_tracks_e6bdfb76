@@ -4,6 +4,8 @@ module AwesomeTracksApi
   module Services
     RSpec.describe TrackSelector do
       describe '#call' do
+        let(:theme_selector) { instance_double('theme_selector') }
+
         let(:weather_repository) { instance_double('weather_repository') }
 
         let(:track_repository) { instance_double('track_repository') }
@@ -34,6 +36,7 @@ module AwesomeTracksApi
         it 'returns success' do
           result = described_class.call(
             request,
+            theme_selector: theme_selector,
             weather_repository: weather_repository,
             track_repository: track_repository
           )
@@ -44,6 +47,7 @@ module AwesomeTracksApi
         it 'returns a track' do
           result = described_class.call(
             request,
+            theme_selector: theme_selector,
             weather_repository: weather_repository,
             track_repository: track_repository
           )
@@ -65,6 +69,7 @@ module AwesomeTracksApi
           it 'returns failure result too' do
             result = described_class.call(
               request,
+              theme_selector: theme_selector,
               weather_repository: weather_repository,
               track_repository: track_repository
             )
@@ -81,6 +86,7 @@ module AwesomeTracksApi
           it 'returns failure result too' do
             result = described_class.call(
               request,
+              theme_selector: theme_selector,
               weather_repository: weather_repository,
               track_repository: track_repository
             )
