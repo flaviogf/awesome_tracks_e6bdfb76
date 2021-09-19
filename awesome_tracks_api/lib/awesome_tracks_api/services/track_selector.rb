@@ -26,7 +26,9 @@ module AwesomeTracksApi
 
         return failure('could not get temperature') if temperature_result.failure?
 
-        track_result = @track_repository.track(theme: 'rock')
+        theme = @theme_selector.call(temperature: temperature_result.value)
+
+        track_result = @track_repository.track(theme: theme)
 
         return failure('could not get track') if track_result.failure?
 
