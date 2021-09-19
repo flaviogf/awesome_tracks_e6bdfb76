@@ -16,11 +16,15 @@ module AwesomeTracksApi
       end
 
       def call
-        result = @track_repository.track(theme: 'rock')
+        temperature_result = @weather_repository.temperature(city: 'franca')
 
-        return failure('could not get track') unless result.success?
+        return failure('could not get temperature') if temperature_result.failure?
 
-        track = result.value
+        track_result = @track_repository.track(theme: 'rock')
+
+        return failure('could not get track') if track_result.failure?
+
+        track = track_result.value
 
         success(track)
       end
