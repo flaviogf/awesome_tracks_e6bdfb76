@@ -20,7 +20,7 @@ module AwesomeTracksApi
       end
 
       def call
-        temperature_result = @weather_repository.temperature(city: 'franca')
+        temperature_result = @weather_repository.temperature(city: @request.fetch('city'))
 
         return failure('could not get temperature') if temperature_result.failure?
 
