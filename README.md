@@ -11,10 +11,16 @@
 
 ## :rocket: Project
 
-### Architecture
+**Architecture**
 
 <p align="center">
   <img src=".github/c4model.png">
+</p>
+
+**Preview**
+
+<p align="center">
+  <img src=".github/preview.gif">
 </p>
 
 ## :computer: Techs
