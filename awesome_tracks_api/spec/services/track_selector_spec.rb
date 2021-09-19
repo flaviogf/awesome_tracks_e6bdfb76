@@ -17,9 +17,7 @@ module AwesomeTracksApi
         end
 
         let(:temperature) do
-          {
-            'temperature' => 29.50
-          }
+          29.50
         end
 
         let(:track) do
@@ -28,7 +26,12 @@ module AwesomeTracksApi
           }
         end
 
+        let(:theme) do
+          Faker::Music.genre
+        end
+
         before do
+          allow(theme_selector).to receive(:call).and_return(theme)
           allow(weather_repository).to receive(:temperature).and_return(Result::Methods.success(temperature))
           allow(track_repository).to receive(:track).and_return(Result::Methods.success(track))
         end
@@ -59,6 +62,18 @@ module AwesomeTracksApi
           track = result.value
 
           expect(track).to eq(expected_track)
+        end
+
+        it 'calls theme selector with the returned temperature to choose the correct theme' do
+          described_class.call(
+            request,
+            theme_selector: theme_selector,
+            weather_repository: weather_repository,
+            track_repository: track_repository
+          )
+
+          expect(theme_selector).to have_received(:call).with(temperature: temperature).once
+          expect(track_repository).to have_received(:track).with(theme: theme).once
         end
 
         context 'when weather repository returns failure result' do
