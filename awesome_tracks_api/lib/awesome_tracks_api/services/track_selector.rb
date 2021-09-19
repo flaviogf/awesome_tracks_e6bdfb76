@@ -5,7 +5,11 @@ module AwesomeTracksApi
     class TrackSelector
       include Result::Methods
 
-      def self.call(request, weather_repository: nil, track_repository: Repositories::GRPCTrackRepository.new)
+      def self.call(
+        request,
+        weather_repository: Repositories::GRPCWeatherRepository.new,
+        track_repository: Repositories::GRPCTrackRepository.new
+      )
         new(request, weather_repository, track_repository).call
       end
 
