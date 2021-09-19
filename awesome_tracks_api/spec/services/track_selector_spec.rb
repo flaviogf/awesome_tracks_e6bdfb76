@@ -4,11 +4,19 @@ module AwesomeTracksApi
   module Services
     RSpec.describe TrackSelector do
       describe '#call' do
+        let(:weather_repository) { instance_double('weather_repository') }
+
         let(:track_repository) { instance_double('track_repository') }
 
         let(:request) do
           {
             'city' => Faker::Address.city
+          }
+        end
+
+        let(:temperature) do
+          {
+            'temperature' => 29.50
           }
         end
 
@@ -19,16 +27,26 @@ module AwesomeTracksApi
         end
 
         before do
+          allow(weather_repository).to receive(:temperature).and_return(Result::Methods.success(temperature))
           allow(track_repository).to receive(:track).and_return(Result::Methods.success(track))
         end
 
         it 'returns success' do
-          result = described_class.call(request, track_repository: track_repository)
+          result = described_class.call(
+            request,
+            weather_repository: weather_repository,
+            track_repository: track_repository
+          )
+
           expect(result.success?).to be_truthy
         end
 
         it 'returns a track' do
-          result = described_class.call(request, track_repository: track_repository)
+          result = described_class.call(
+            request,
+            weather_repository: weather_repository,
+            track_repository: track_repository
+          )
 
           expected_track = {
             'id' => track.fetch('id')
@@ -45,7 +63,12 @@ module AwesomeTracksApi
           end
 
           it 'returns failure result too' do
-            result = described_class.call(request, track_repository: track_repository)
+            result = described_class.call(
+              request,
+              weather_repository: weather_repository,
+              track_repository: track_repository
+            )
+
             expect(result.failure?).to be_truthy
           end
         end
