@@ -72,7 +72,7 @@ module AwesomeTracksApi
             track_repository: track_repository
           )
 
-          expect(theme_selector).to have_received(:call).with(temperature: temperature).once
+          expect(theme_selector).to have_received(:call).with(temperature).once
           expect(track_repository).to have_received(:track).with(theme: theme).once
         end
 

@@ -26,15 +26,19 @@ module AwesomeTracksApi
 
         return failure('could not get temperature') if temperature_result.failure?
 
-        theme = @theme_selector.call(temperature: temperature_result.value)
-
-        track_result = @track_repository.track(theme: theme)
+        track_result = @track_repository.track(theme: fetch_theme_by(temperature_result.value))
 
         return failure('could not get track') if track_result.failure?
 
         track = track_result.value
 
         success(track)
+      end
+
+      private
+
+      def fetch_theme_by(temperature)
+        @theme_selector.call(temperature)
       end
     end
   end
