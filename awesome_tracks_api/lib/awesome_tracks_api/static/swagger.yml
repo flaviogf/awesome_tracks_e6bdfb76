@@ -27,7 +27,7 @@ paths:
           description: Longitude (optional)
       responses:
         '200':
-          description: Returns a list of tracks filter by parameters
+          description: Returns the best track for a specific location based on the temperature of this place
           content:
             application/json:
               schema:
