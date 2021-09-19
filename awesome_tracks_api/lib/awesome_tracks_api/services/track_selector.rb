@@ -22,11 +22,11 @@ module AwesomeTracksApi
       end
 
       def call
-        temperature_result = @weather_repository.temperature(city: @request.fetch('city'))
+        temperature_result = temperature_result_from(@request.fetch('city'))
 
         return failure('could not get temperature') if temperature_result.failure?
 
-        track_result = @track_repository.track(theme: fetch_theme_by(temperature_result.value))
+        track_result = track_result_from(theme_from(temperature_result.value))
 
         return failure('could not get track') if track_result.failure?
 
@@ -37,8 +37,16 @@ module AwesomeTracksApi
 
       private
 
-      def fetch_theme_by(temperature)
+      def temperature_result_from(city)
+        @weather_repository.temperature(city: city)
+      end
+
+      def theme_from(temperature)
         @theme_selector.call(temperature)
+      end
+
+      def track_result_from(theme)
+        @track_repository.track(theme: theme)
       end
     end
   end
