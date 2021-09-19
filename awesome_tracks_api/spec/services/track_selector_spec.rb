@@ -57,7 +57,7 @@ module AwesomeTracksApi
           expect(track).to eq(expected_track)
         end
 
-        context 'when repository returns failure result' do
+        context 'when track repository returns failure result' do
           before do
             allow(track_repository).to receive(:track).and_return(Result::Methods.failure('oops'))
           end
