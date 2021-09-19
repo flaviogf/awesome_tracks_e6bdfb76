@@ -57,6 +57,22 @@ module AwesomeTracksApi
           expect(track).to eq(expected_track)
         end
 
+        context 'when weather repository returns failure result' do
+          before do
+            allow(weather_repository).to receive(:temperature).and_return(Result::Methods.failure('oops'))
+          end
+
+          it 'returns failure result too' do
+            result = described_class.call(
+              request,
+              weather_repository: weather_repository,
+              track_repository: track_repository
+            )
+
+            expect(result.failure?).to be_truthy
+          end
+        end
+
         context 'when track repository returns failure result' do
           before do
             allow(track_repository).to receive(:track).and_return(Result::Methods.failure('oops'))
