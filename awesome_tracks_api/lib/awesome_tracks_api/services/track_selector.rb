@@ -30,9 +30,7 @@ module AwesomeTracksApi
 
         return failure('could not get track') if track_result.failure?
 
-        track = track_result.value
-
-        success(track)
+        success(track_result.value)
       end
 
       private
