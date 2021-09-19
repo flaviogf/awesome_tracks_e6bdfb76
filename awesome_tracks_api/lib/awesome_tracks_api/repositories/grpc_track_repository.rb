@@ -21,7 +21,7 @@ module AwesomeTracksApi
 
         success(result.value)
       rescue StandardError => e
-        failure(e.error)
+        failure(e.message)
       end
     end
   end
