@@ -7,7 +7,7 @@ module AwesomeTracksApi
 
       def self.call(
         request,
-        theme_selector: nil,
+        theme_selector: ThemeSelector.new,
         weather_repository: Repositories::GRPCWeatherRepository.new,
         track_repository: Repositories::GRPCTrackRepository.new
       )
