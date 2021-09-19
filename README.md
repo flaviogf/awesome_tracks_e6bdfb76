@@ -25,7 +25,7 @@
 
 ## :computer: Techs
 
-- GRPC
+- gRPC
 - Ruby
 - RSpec
 - Sinatra
