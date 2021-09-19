@@ -50,7 +50,7 @@ paths:
                       url:
                         type: string
                         format: uri
-                      image_url:
+                      imageUrl:
                         type: string
                         format: uri
                   artists:
